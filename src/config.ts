@@ -1,11 +1,9 @@
-import envSchema, { type Env } from "#validation/env.schema.ts";
 import z from "zod";
+import envSchema, { type Env } from "#validation/env.schema.ts";
 
-let validated: Readonly<Env> | undefined;
+let env!: Readonly<Env>;
 
-export function validateEnv(): Readonly<Env> {
-  if (validated) return validated;
-
+export function validateEnv(): void {
   const result = envSchema.safeParse(process.env);
 
   if (!result.success) {
@@ -14,19 +12,7 @@ export function validateEnv(): Readonly<Env> {
     process.exit(1);
   }
 
-  validated = Object.freeze(result.data);
-  return validated;
+  env = Object.freeze(result.data);
 }
 
-const env = new Proxy({} as Readonly<Env>, {
-  get(_target, key) {
-    if (!validated) {
-      throw new Error(
-        `env.${String(key)} was read before validateEnv() ran. Call validateEnv() at startup first.`,
-      );
-    }
-    return validated[key as keyof Env];
-  },
-});
-
-export default env;
+export { env as default };
