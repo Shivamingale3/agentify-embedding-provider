@@ -1,0 +1,24 @@
+{
+  "name": "embedding-provider",
+  "version": "1.0.0",
+  "description": "Serves Embeddings on Pi server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch src/server.ts",
+    "start": "node src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "type": "module",
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.5",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^24.19.2",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
+    "better-sqlite3": "^13.0.3",
+    "onnxruntime-node": "^1.31.1"
+  }
+}
